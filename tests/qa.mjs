@@ -66,7 +66,7 @@ async function inspect(viewport, label) {
   check(geometry.body <= geometry.viewport + 1, `${label}: body 横向溢出 ${JSON.stringify(geometry)}`);
 
   const outOfBounds = await page.evaluate(() => {
-    const selectors = [".hero-name", ".hero-role", ".hero-summary", ".hero-actions", ".hero-card"];
+    const selectors = [".hero-name", ".hero-role", ".hero-summary", ".hero-actions", ".hero-media"];
     return selectors.filter((selector) => {
       const element = document.querySelector(selector);
       if (!element) return true;
@@ -82,6 +82,7 @@ async function inspect(viewport, label) {
   check(fontsReady, `${label}: 本地字体没有正确加载`);
 
   check((await page.locator("#skills-grid .skill-card").count()) === 6, `${label}: 能力卡片数量错误`);
+  check((await page.locator(".photo-archive img").count()) === 2, `${label}: 个人照片数量错误`);
   check((await page.locator("#timeline .timeline-item").count()) === 4, `${label}: 经历数量错误`);
   check((await page.locator("#certificate-grid .certificate-card").count()) === 12, `${label}: 证书数量错误`);
 
@@ -134,6 +135,10 @@ async function inspect(viewport, label) {
     await page.waitForTimeout(100);
     const certTop = await page.locator("#certificates").evaluate((element) => Math.abs(element.getBoundingClientRect().top));
     check(certTop < 100, `desktop: 证书导航没有正确定位，top=${certTop}`);
+    check(
+      await page.locator('#site-nav a[href="#certificates"]').evaluate((link) => link.classList.contains("is-active")),
+      "desktop: 当前导航状态没有更新",
+    );
   } else {
     await page.locator(".nav-toggle").click();
     check(await page.locator("#site-nav").evaluate((nav) => nav.classList.contains("is-open")), "mobile: 菜单没有打开");

@@ -5,6 +5,8 @@ const state = {
   keyword: "",
 };
 
+let revealObserver;
+
 const $ = (selector, scope = document) => scope.querySelector(selector);
 
 function fillProfile() {
@@ -24,13 +26,16 @@ function fillProfile() {
   $("#resume-link").href = profile.resume || "#contact";
 
   $("#hero-stats").innerHTML = profile.stats
-    .map(
-      (item) => `
+    .map((item) => {
+      const match = String(item.value).match(/^(\d+)(.*)$/);
+      const count = match?.[1] ?? item.value;
+      const suffix = match?.[2] ?? "";
+      return `
         <div>
           <dt>${escapeHTML(item.label)}</dt>
-          <dd>${escapeHTML(item.value)}</dd>
-        </div>`,
-    )
+          <dd data-count="${escapeAttribute(count)}" data-suffix="${escapeAttribute(suffix)}">${escapeHTML(item.value)}</dd>
+        </div>`;
+    })
     .join("");
 }
 
@@ -107,6 +112,100 @@ function renderCertificates() {
     .join("");
 
   $("#certificate-empty").hidden = filtered.length !== 0;
+  if (revealObserver) registerReveal($("#certificate-grid").children);
+}
+
+function registerReveal(elements) {
+  [...elements].forEach((element) => {
+    if (element.classList.contains("reveal")) return;
+    element.classList.add("reveal");
+    revealObserver.observe(element);
+  });
+}
+
+function setupReveal() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8%", threshold: 0.08 },
+  );
+
+  registerReveal(
+    document.querySelectorAll(".section-heading, .skill-card, .photo-archive figure, .timeline-item, .certificate-card, .contact-inner"),
+  );
+}
+
+function setupStatCounters() {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const counters = document.querySelectorAll("[data-count]");
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const element = entry.target;
+        const target = Number(element.dataset.count);
+        const suffix = element.dataset.suffix ?? "";
+        if (!Number.isFinite(target)) return;
+
+        const startedAt = performance.now();
+        const duration = 720;
+        const step = (now) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const eased = 1 - (1 - progress) ** 3;
+          element.textContent = `${Math.round(target * eased)}${suffix}`;
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        element.textContent = `0${suffix}`;
+        requestAnimationFrame(step);
+        observer.unobserve(element);
+      });
+    },
+    { threshold: 0.5 },
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
+
+function setupActiveNavigation() {
+  const links = [...document.querySelectorAll("#site-nav a[href^='#']")];
+  const sections = links
+    .map((link) => ({ link, section: document.querySelector(link.getAttribute("href")) }))
+    .filter((item) => item.section);
+
+  let scheduled = false;
+  const update = () => {
+    const marker = window.scrollY + window.innerHeight * 0.34;
+    let current = sections[0];
+    sections.forEach((item) => {
+      if (item.section.offsetTop <= marker) current = item;
+    });
+    sections.forEach(({ link }) => {
+      const active = link === current?.link;
+      link.classList.toggle("is-active", active);
+      if (active) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+    scheduled = false;
+  };
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true },
+  );
+  update();
 }
 
 function openCertificate(index) {
@@ -226,6 +325,9 @@ function init() {
   renderFilters();
   renderCertificates();
   bindEvents();
+  setupReveal();
+  setupStatCounters();
+  setupActiveNavigation();
   $("#current-year").textContent = new Date().getFullYear();
 }
 

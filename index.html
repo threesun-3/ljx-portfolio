@@ -20,8 +20,8 @@
     <header class="site-header" id="top">
       <div class="nav-shell">
         <a class="brand" href="#top" aria-label="返回首页">
-          <span class="brand-mark">ljx</span>
-          <span class="brand-name">portfolio</span>
+          <span class="brand-mark">LJX</span>
+          <span class="brand-name">EMBEDDED PORTFOLIO</span>
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -39,55 +39,45 @@
     </header>
 
     <main id="main">
-      <section class="hero section-shell" aria-labelledby="hero-title">
-        <div class="hero-kicker">
-          <span>PORTFOLIO · EMBEDDED SYSTEMS</span>
-          <span>FUJIAN · CHINA</span>
-        </div>
-
+      <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow"><span class="signal-dot"></span> OPEN TO WORK</p>
-          <h1 id="hero-title">
-            <span class="hero-name" id="profile-name">卢嘉贤</span>
-            <span class="hero-role" id="profile-role">嵌入式软件工程师</span>
-          </h1>
-          <div class="hero-bottom">
+          <div class="hero-kicker">
+            <span>EMBEDDED SOFTWARE ENGINEER</span>
+            <span>XIAMEN · CHINA</span>
+          </div>
+          <div class="hero-copy-main">
+            <p class="eyebrow"><span class="signal-dot"></span> AVAILABLE FOR OPPORTUNITIES</p>
+            <h1 id="hero-title" class="hero-name"><span id="profile-name">卢嘉贤</span></h1>
+            <p class="hero-role" id="profile-role">嵌入式软件工程师</p>
             <p class="hero-summary" id="profile-summary">
               人工智能专业本科，具备单片机固件、实时系统、通信协议、外设驱动和软硬件联调经验。
             </p>
             <div class="hero-actions">
-              <a class="text-link" href="#certificates">查看证书档案 <span>↘</span></a>
-              <a class="text-link text-link-muted" id="resume-link" href="#contact">获取 PDF 简历 <span>↗</span></a>
+              <a class="text-link" id="resume-link" href="#contact"><span aria-hidden="true">↓</span> PDF 简历</a>
+              <a class="text-link text-link-muted" href="#certificates"><span aria-hidden="true">⌕</span> 查看证书</a>
             </div>
+          </div>
+          <div class="hero-meta" aria-label="个人基本信息">
+            <div><span>LOCATION</span><strong id="profile-location">厦门</strong></div>
+            <div><span>EDUCATION</span><strong id="profile-education">本科 · 人工智能</strong></div>
           </div>
         </div>
 
-        <aside class="hero-card" aria-label="个人职业信息">
-          <div class="hero-card-head">
-            <span>DEVELOPER PROFILE</span>
-            <span class="status-line"><i></i> AVAILABLE</span>
+        <figure class="hero-media">
+          <img class="hero-photo" src="assets/photos/hero-sunset.webp" alt="卢嘉贤在夕阳湖边的侧脸照片" />
+          <figcaption>
+            <span>PERSONAL ARCHIVE · 01</span>
+            <span>MCU / RTOS / EMBEDDED SYSTEMS</span>
+          </figcaption>
+          <div class="hero-profile-stamp">
+            <img src="assets/photos/profile.webp" alt="卢嘉贤证件照" />
+            <span><small>PROFILE</small><strong>卢嘉贤</strong></span>
           </div>
+        </figure>
 
-          <div class="signal-visual" aria-hidden="true">
-            <img class="hero-photo" src="assets/photos/hero-sunset.webp" alt="卢嘉贤在夕阳湖边的侧脸照片" />
-            <span class="photo-label">PERSONAL MOMENT / SUNSET</span>
-          </div>
-
-          <div class="profile-id">
-            <img class="profile-avatar" src="assets/photos/profile.webp" alt="卢嘉贤证件照" />
-            <div class="hero-card-role">
-              <span>CAREER FOCUS</span>
-              <strong>MCU / EMBEDDED SYSTEMS</strong>
-            </div>
-          </div>
-          <div class="hero-card-grid">
-            <div><span>LOCATION</span><strong id="profile-location">福建</strong></div>
-            <div><span>EDUCATION</span><strong id="profile-education">本科</strong></div>
-          </div>
-        </aside>
-
-        <dl class="hero-stats" id="hero-stats" aria-label="个人经历概览"></dl>
-        <div class="scroll-note" aria-hidden="true"><span></span> SCROLL TO EXPLORE</div>
+        <div class="hero-stats-band">
+          <dl class="hero-stats section-shell" id="hero-stats" aria-label="个人经历概览"></dl>
+        </div>
       </section>
 
       <section class="section-shell section-block" id="about" aria-labelledby="about-title">
@@ -102,6 +92,16 @@
           </p>
         </div>
         <div class="skills-grid" id="skills-grid"></div>
+        <div class="photo-archive" aria-label="个人照片记录">
+          <figure>
+            <img src="assets/photos/portrait-candid.webp" alt="卢嘉贤阅读资料的生活照片" loading="lazy" />
+            <figcaption><span>PERSONAL ARCHIVE · 02</span><strong>学习记录</strong></figcaption>
+          </figure>
+          <figure>
+            <img src="assets/photos/workbench.webp" alt="卢嘉贤在工作台旁的照片" loading="lazy" />
+            <figcaption><span>PERSONAL ARCHIVE · 03</span><strong>工作台记录</strong></figcaption>
+          </figure>
+        </div>
       </section>
 
       <section class="section-dark" id="experience" aria-labelledby="experience-title">
