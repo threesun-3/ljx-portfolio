@@ -1,0 +1,7 @@
+.edge-qa*/
+preview-*.png
+.DS_Store
+Thumbs.db
+node_modules/
+test-results/
+.tools/

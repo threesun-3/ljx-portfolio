@@ -1,0 +1,14 @@
+{
+  "name": "ljx-credential-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/qa.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/space-grotesk": "^5.2.10",
+    "playwright": "^1.61.1"
+  }
+}
