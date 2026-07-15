@@ -8,7 +8,7 @@ window.PORTFOLIO_DATA = {
     name: "卢嘉贤",
     role: "嵌入式软件工程师",
     summary:
-      "人工智能专业本科，专注单片机与嵌入式软件开发。具备 STM32、FreeRTOS、RS485/Modbus、外设驱动和软硬件联调经验，做过智能称重设备、智能物流搬运车与智能门锁项目。",
+      "人工智能专业本科，具备 STM32、FreeRTOS、RS485/Modbus、外设驱动和软硬件联调经验。项目涉及智能称重设备、智能物流搬运车与智能门锁。",
     location: "厦门",
     education: "本科 · 人工智能",
     email: "1593105984@qq.com",
