@@ -82,7 +82,6 @@ async function inspect(viewport, label) {
   check(fontsReady, `${label}: 本地字体没有正确加载`);
 
   check((await page.locator("#skills-grid .skill-card").count()) === 6, `${label}: 能力卡片数量错误`);
-  check((await page.locator(".photo-archive img").count()) === 2, `${label}: 个人照片数量错误`);
   check((await page.locator("#timeline .timeline-item").count()) === 4, `${label}: 经历数量错误`);
   check((await page.locator("#certificate-grid .certificate-card").count()) === 12, `${label}: 证书数量错误`);
 

@@ -138,7 +138,7 @@ function setupReveal() {
   );
 
   registerReveal(
-    document.querySelectorAll(".section-heading, .skill-card, .photo-archive figure, .timeline-item, .certificate-card, .contact-inner"),
+    document.querySelectorAll(".section-heading, .skill-card, .timeline-item, .certificate-card, .contact-inner"),
   );
 }
 
