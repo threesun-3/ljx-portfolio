@@ -128,14 +128,18 @@ img { display: block; max-width: 100%; }
 .nav-toggle span:not(.sr-only) { display: block; width: 20px; height: 2px; margin: 5px 0; background: var(--ink); }
 
 .hero {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(460px, 1fr);
   grid-template-rows: minmax(650px, calc(100svh - 176px)) auto;
   min-height: calc(100svh - 66px);
   background: #f1f3f5;
   border-bottom: 1px solid var(--line-light);
+  overflow: hidden;
 }
 .hero-copy {
+  position: relative;
+  z-index: 2;
   min-width: 0;
   padding: 30px clamp(42px, 6vw, 104px) 42px max(42px, calc((100vw - var(--shell)) / 2));
   display: grid;
@@ -202,7 +206,22 @@ img { display: block; max-width: 100%; }
 .hero-meta span, .hero-meta strong { font-family: "IBM Plex Mono", monospace; font-size: 11px; }
 .hero-meta span { color: #8a9098; }
 .hero-meta strong { color: #3d434c; font-weight: 500; }
-.hero-media { position: relative; min-width: 0; min-height: 650px; margin: 0; overflow: hidden; background: #c9ced3; }
+.hero-media {
+  position: relative;
+  z-index: 1;
+  width: calc(100% + 180px);
+  min-width: 0;
+  min-height: 650px;
+  margin: 0 0 0 -180px;
+  overflow: hidden;
+  background: #c9ced3;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.55) 25%, #000 44%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.1) 8%, rgba(0,0,0,.55) 25%, #000 44%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
 .hero-media::after {
   content: "";
   position: absolute;
@@ -474,7 +493,10 @@ img { display: block; max-width: 100%; }
   .text-link { min-height: 46px; padding: 10px 15px; font-size: 14px; }
   .hero-meta { gap: 32px; padding-top: 14px; }
   .hero-meta span, .hero-meta strong { font-size: 12px; }
-  .hero-media { min-height: 250px; }
+  .hero-media {
+    width: 100%; min-height: 250px; margin: 0;
+    -webkit-mask-image: none; mask-image: none;
+  }
   .hero-photo { object-position: center 47%; }
   .hero-media figcaption { right: 14px; bottom: 12px; font-size: 9px; }
   .hero-stats { min-height: 105px; grid-template-columns: repeat(3, 1fr); }
