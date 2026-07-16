@@ -206,13 +206,16 @@ async function inspectProjects(viewport, label) {
   });
 
   check((await page.locator("[data-project-tab]").count()) === 2, `${label}: 项目标签数量错误`);
+  check((await page.locator(".projects-hero-art").count()) === 1, `${label}: 项目首屏插图缺失`);
   check((await page.locator('[data-project-panel="logistics"] .diagram-node').count()) === 5, `${label}: 物流项目框架节点错误`);
   check(await page.locator('[data-project-panel="logistics"]').isVisible(), `${label}: 默认项目没有显示`);
   check(!(await page.locator('[data-project-panel="weighing"]').isVisible()), `${label}: 非当前项目意外显示`);
+  check((await page.locator(".project-concept:visible").count()) === 1, `${label}: 当前项目概念插图状态错误`);
   check((await page.locator(".demo-placeholder:visible").count()) === 1, `${label}: 视频待补充状态错误`);
 
   await page.locator('[data-project-tab="weighing"]').click();
   check(await page.locator('[data-project-panel="weighing"]').isVisible(), `${label}: 称重项目切换失败`);
+  check(await page.locator(".weighing-concept").isVisible(), `${label}: 称重项目概念插图没有显示`);
   check((await page.locator('[data-project-panel="weighing"] .diagram-node').count()) === 5, `${label}: 称重项目框架节点错误`);
   check(await page.locator('[data-project-tab="weighing"]').getAttribute("aria-selected") === "true", `${label}: 项目标签状态错误`);
 
