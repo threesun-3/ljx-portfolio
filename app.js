@@ -14,7 +14,6 @@ function fillProfile() {
   $("#profile-name").textContent = profile.name;
   $("#profile-role").textContent = profile.role;
   $("#profile-summary").textContent = profile.summary;
-  $("#profile-location").textContent = profile.location;
   $("#profile-education").textContent = profile.education;
   $("#footer-name").textContent = profile.name;
   const monogram = $(".profile-monogram");

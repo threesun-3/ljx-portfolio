@@ -75,6 +75,19 @@ async function inspect(viewport, label) {
     });
   });
   check(outOfBounds.length === 0, `${label}: 首屏元素超出可视范围 ${outOfBounds.join(", ")}`);
+  check(!(await page.locator("body").innerText()).includes("厦门"), `${label}: 页面仍显示厦门地点信息`);
+  check((await page.locator(".hero-profile-stamp").count()) === 0, `${label}: 首屏证件照小板块仍然存在`);
+
+  const heroButtonSizes = await page.locator(".hero-actions .text-link").evaluateAll((buttons) =>
+    buttons.map((button) => ({
+      height: button.getBoundingClientRect().height,
+      fontSize: Number.parseFloat(getComputedStyle(button).fontSize),
+    })),
+  );
+  check(
+    heroButtonSizes.every(({ height, fontSize }) => height >= 45 && fontSize >= 14),
+    `${label}: 首屏按钮尺寸偏小 ${JSON.stringify(heroButtonSizes)}`,
+  );
 
   const fontsReady = await page.evaluate(() =>
     document.fonts.check('400 16px "Space Grotesk"') && document.fonts.check('500 16px "IBM Plex Mono"'),
