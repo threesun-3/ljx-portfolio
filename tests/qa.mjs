@@ -13,6 +13,9 @@ const mime = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
+  ".webp": "image/webp",
+  ".woff2": "font/woff2",
+  ".mp4": "video/mp4",
   ".pdf": "application/pdf",
 };
 
@@ -100,6 +103,8 @@ async function inspect(viewport, label) {
   check(fontsReady, `${label}: 本地字体没有正确加载`);
 
   check((await page.locator("#skills-grid .skill-card").count()) === 6, `${label}: 能力卡片数量错误`);
+  check((await page.locator('#site-nav a[href="projects.html"]').count()) === 1, `${label}: 项目页导航入口缺失`);
+  check((await page.locator("#projects-link").getAttribute("href")) === "projects.html", `${label}: 首屏项目入口错误`);
   check((await page.locator("#timeline .timeline-item").count()) === 4, `${label}: 经历数量错误`);
   check((await page.locator("#certificate-grid .certificate-card").count()) === 12, `${label}: 证书数量错误`);
 
@@ -170,9 +175,54 @@ async function inspect(viewport, label) {
   await context.close();
 }
 
+async function inspectProjects(viewport, label) {
+  const context = await browser.newContext({ viewport });
+  const page = await context.newPage();
+  const runtimeErrors = [];
+  page.on("pageerror", (error) => runtimeErrors.push(`pageerror: ${error.message}`));
+  page.on("console", (message) => {
+    if (message.type() === "error") runtimeErrors.push(`console: ${message.text()}`);
+  });
+
+  const response = await page.goto("http://127.0.0.1:4173/projects.html", { waitUntil: "networkidle" });
+  check(response?.ok(), `${label}: 项目页请求失败`);
+  check(runtimeErrors.length === 0, `${label}: 项目页浏览器错误 ${runtimeErrors.join(" | ")}`);
+
+  const geometry = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    document: document.documentElement.scrollWidth,
+    body: document.body.scrollWidth,
+  }));
+  check(geometry.document <= geometry.viewport + 1, `${label}: 项目页横向溢出 ${JSON.stringify(geometry)}`);
+  check(geometry.body <= geometry.viewport + 1, `${label}: 项目页 body 横向溢出 ${JSON.stringify(geometry)}`);
+
+  check((await page.locator("[data-project-tab]").count()) === 2, `${label}: 项目标签数量错误`);
+  check((await page.locator('[data-project-panel="logistics"] .diagram-node').count()) === 5, `${label}: 物流项目框架节点错误`);
+  check(await page.locator('[data-project-panel="logistics"]').isVisible(), `${label}: 默认项目没有显示`);
+  check(!(await page.locator('[data-project-panel="weighing"]').isVisible()), `${label}: 非当前项目意外显示`);
+  check((await page.locator(".demo-placeholder:visible").count()) === 1, `${label}: 视频待补充状态错误`);
+
+  await page.locator('[data-project-tab="weighing"]').click();
+  check(await page.locator('[data-project-panel="weighing"]').isVisible(), `${label}: 称重项目切换失败`);
+  check((await page.locator('[data-project-panel="weighing"] .diagram-node').count()) === 5, `${label}: 称重项目框架节点错误`);
+  check(await page.locator('[data-project-tab="weighing"]').getAttribute("aria-selected") === "true", `${label}: 项目标签状态错误`);
+
+  await page.locator('[data-project-tab="weighing"]').press("ArrowLeft");
+  check(await page.locator('[data-project-tab="logistics"]').getAttribute("aria-selected") === "true", `${label}: 键盘切换项目失败`);
+
+  if (label.includes("mobile")) {
+    await page.locator(".nav-toggle").click();
+    check(await page.locator("#site-nav").evaluate((nav) => nav.classList.contains("is-open")), `${label}: 项目页菜单没有打开`);
+  }
+
+  await context.close();
+}
+
 try {
   await inspect({ width: 1440, height: 1000 }, "desktop");
   await inspect({ width: 390, height: 844 }, "mobile");
+  await inspectProjects({ width: 1440, height: 1000 }, "projects desktop");
+  await inspectProjects({ width: 390, height: 844 }, "projects mobile");
 } finally {
   await browser.close();
   server.close();
@@ -184,4 +234,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("QA PASSED: desktop and mobile interactions are healthy.");
+console.log("QA PASSED: portfolio and project pages are healthy on desktop and mobile.");

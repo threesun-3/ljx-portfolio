@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="卢嘉贤的嵌入式项目档案：项目简介、系统框架、技术职责与演示记录。" />
+    <meta name="theme-color" content="#f3f4f6" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="卢嘉贤｜嵌入式项目档案" />
+    <meta property="og:description" content="智能物流搬运车与智能茶叶定量下料控制器项目展示。" />
+    <title>卢嘉贤｜嵌入式项目档案</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=20260716-2" />
+    <link rel="stylesheet" href="projects.css?v=20260716-1" />
+    <script src="projects.js?v=20260716-1" defer></script>
+  </head>
+  <body class="projects-page">
+    <a class="skip-link" href="#main">跳到主要内容</a>
+
+    <header class="site-header" id="top">
+      <div class="nav-shell">
+        <a class="brand" href="index.html" aria-label="返回个人主页">
+          <span class="brand-mark">LJX</span>
+          <span class="brand-name">EMBEDDED PORTFOLIO</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+          <span class="sr-only">打开导航</span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="主导航">
+          <a href="index.html">首页</a>
+          <a href="index.html#about">技能</a>
+          <a class="is-active" href="projects.html" aria-current="page">项目</a>
+          <a href="index.html#certificates">证书</a>
+          <a href="index.html#contact">联系</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="projects-hero" aria-labelledby="projects-title">
+        <div class="section-shell projects-hero-inner">
+          <div class="projects-hero-index">PROJECT ARCHIVE / 2026</div>
+          <div>
+            <p class="eyebrow">EMBEDDED PROJECTS / 嵌入式项目</p>
+            <h1 id="projects-title">项目档案</h1>
+          </div>
+          <p class="projects-hero-summary">记录项目背景、个人职责、系统框架与演示资料，内容均来自真实学习和工作经历。</p>
+          <div class="projects-count"><strong>02</strong><span>PROJECTS</span></div>
+        </div>
+      </section>
+
+      <div class="project-switcher" aria-label="项目切换">
+        <div class="section-shell project-tabs" role="tablist" aria-label="项目列表">
+          <button id="tab-logistics" class="project-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="project-logistics" tabindex="0" data-project-tab="logistics">
+            <span>01</span><strong>智能物流搬运车</strong><small>STM32F407 / FreeRTOS / OpenMV</small>
+          </button>
+          <button id="tab-weighing" class="project-tab" type="button" role="tab" aria-selected="false" aria-controls="project-weighing" tabindex="-1" data-project-tab="weighing">
+            <span>02</span><strong>智能定量下料控制器</strong><small>STM32 / RS485 / Modbus</small>
+          </button>
+        </div>
+      </div>
+
+      <section id="project-logistics" class="project-panel" role="tabpanel" aria-labelledby="tab-logistics" data-project-panel="logistics">
+        <section class="project-overview">
+          <div class="section-shell project-overview-grid">
+            <div class="project-number">PROJECT / 01</div>
+            <div class="project-title-block">
+              <p class="eyebrow">COMPETITION PROJECT / 竞赛项目</p>
+              <h2>STM32F407<br />智能物流搬运车</h2>
+              <p class="project-lead">面向智能物流搬运赛项开发的视觉识别与运动控制系统，实现色块识别、机械抓取、路径运动和定点投放。</p>
+            </div>
+            <dl class="project-facts">
+              <div><dt>时间</dt><dd>2025.04 - 2025.08</dd></div>
+              <div><dt>成果</dt><dd>国家一等奖</dd></div>
+              <div><dt>职责</dt><dd>视觉参数、运动协调、整车联调</dd></div>
+              <div><dt>平台</dt><dd>STM32F407 / FreeRTOS / OpenMV</dd></div>
+            </dl>
+          </div>
+          <div class="section-shell responsibility-grid">
+            <div class="responsibility-label">RESPONSIBILITIES / 个人职责</div>
+            <ol>
+              <li><span>01</span><p>负责 OpenMV 色块识别参数调试，并建立视觉结果与底盘动作之间的控制关系。</p></li>
+              <li><span>02</span><p>协调摄像头、底盘运动与机械抓取流程，完成任务状态切换和动作时序联调。</p></li>
+              <li><span>03</span><p>参与整车测试与现场问题定位，验证识别、抓取和定点投放的连续运行效果。</p></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="architecture-section" aria-labelledby="logistics-architecture-title">
+          <div class="section-shell architecture-heading">
+            <div class="project-number">SYSTEM / 01</div>
+            <div>
+              <p class="eyebrow">SYSTEM ARCHITECTURE / 系统框架</p>
+              <h2 id="logistics-architecture-title">视觉、控制与执行闭环</h2>
+            </div>
+            <p>OpenMV 提供视觉识别结果，STM32F407 在 FreeRTOS 任务中完成状态调度，并驱动底盘与机械执行机构。</p>
+          </div>
+
+          <div class="section-shell system-diagram" aria-label="智能物流搬运车系统框架图">
+            <div class="diagram-stage diagram-inputs">
+              <span class="diagram-stage-label">INPUT / 感知层</span>
+              <div class="diagram-node"><small>VISION 01</small><strong>OpenMV 摄像头</strong><p>色块识别与坐标结果</p></div>
+              <div class="diagram-node"><small>SENSOR 02</small><strong>位置与状态输入</strong><p>任务触发和运行反馈</p></div>
+            </div>
+            <div class="diagram-arrow" aria-hidden="true">→</div>
+            <div class="diagram-stage diagram-core">
+              <span class="diagram-stage-label">CORE / 控制层</span>
+              <div class="diagram-node diagram-node-core"><small>MCU</small><strong>STM32F407</strong><p>FreeRTOS 任务调度<br />状态机与动作时序<br />视觉和运动协调</p></div>
+            </div>
+            <div class="diagram-arrow" aria-hidden="true">→</div>
+            <div class="diagram-stage diagram-outputs">
+              <span class="diagram-stage-label">OUTPUT / 执行层</span>
+              <div class="diagram-node"><small>MOTION 01</small><strong>底盘运动控制</strong><p>路径运动与定点到达</p></div>
+              <div class="diagram-node"><small>ACTION 02</small><strong>机械抓取机构</strong><p>目标抓取与定点投放</p></div>
+            </div>
+          </div>
+          <div class="section-shell data-flow"><span>01 视觉识别</span><i>→</i><span>02 状态调度</span><i>→</i><span>03 运动控制</span><i>→</i><span>04 抓取投放</span></div>
+        </section>
+
+        <section class="demo-section" aria-labelledby="logistics-demo-title">
+          <div class="section-shell demo-grid">
+            <div class="demo-copy">
+              <div class="project-number">DEMO / 01</div>
+              <p class="eyebrow">PROJECT DEMO / 演示视频</p>
+              <h2 id="logistics-demo-title">整车任务演示</h2>
+              <p>用于展示视觉识别、底盘运动、机械抓取和定点投放的完整任务流程。</p>
+              <dl><div><dt>视频状态</dt><dd>待补充</dd></div><div><dt>建议内容</dt><dd>连续任务流程 / 现场运行</dd></div></dl>
+            </div>
+            <div class="demo-player" data-video-project="logistics">
+              <video controls preload="metadata" hidden aria-label="智能物流搬运车演示视频"></video>
+              <div class="demo-placeholder">
+                <span class="play-mark" aria-hidden="true"></span>
+                <strong>演示视频待补充</strong>
+                <small>VIDEO FILE NOT AVAILABLE</small>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="project-weighing" class="project-panel" role="tabpanel" aria-labelledby="tab-weighing" data-project-panel="weighing" hidden>
+        <section class="project-overview">
+          <div class="section-shell project-overview-grid">
+            <div class="project-number">PROJECT / 02</div>
+            <div class="project-title-block">
+              <p class="eyebrow">PRODUCT PROJECT / 产品项目</p>
+              <h2>智能茶叶<br />定量下料控制器</h2>
+              <p class="project-lead">面向茶叶定量下料设备的嵌入式控制系统，完成称重采集、通信、执行器控制、参数管理和整机联调。</p>
+            </div>
+            <dl class="project-facts">
+              <div><dt>时间</dt><dd>2026.02 - 2026.06</dd></div>
+              <div><dt>场景</dt><dd>智能称重与定量下料</dd></div>
+              <div><dt>职责</dt><dd>固件开发、通信、执行控制、联调</dd></div>
+              <div><dt>技术</dt><dd>STM32 / RS485 / Modbus RTU</dd></div>
+            </dl>
+          </div>
+          <div class="section-shell responsibility-grid">
+            <div class="responsibility-label">RESPONSIBILITIES / 个人职责</div>
+            <ol>
+              <li><span>01</span><p>完成称重数据采集与处理，围绕目标重量组织定量下料控制流程。</p></li>
+              <li><span>02</span><p>实现 RS485 / Modbus RTU 通信、参数管理以及设备状态数据交互。</p></li>
+              <li><span>03</span><p>负责执行器控制和整机软硬件联调，定位称重、通信和动作衔接问题。</p></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="architecture-section" aria-labelledby="weighing-architecture-title">
+          <div class="section-shell architecture-heading">
+            <div class="project-number">SYSTEM / 02</div>
+            <div>
+              <p class="eyebrow">SYSTEM ARCHITECTURE / 系统框架</p>
+              <h2 id="weighing-architecture-title">采集、决策与执行闭环</h2>
+            </div>
+            <p>称重信号进入 MCU 后完成数据处理与状态判断，通过执行机构控制下料，并以 RS485 / Modbus 连接外部设备。</p>
+          </div>
+
+          <div class="section-shell system-diagram" aria-label="智能茶叶定量下料控制器系统框架图">
+            <div class="diagram-stage diagram-inputs">
+              <span class="diagram-stage-label">INPUT / 采集层</span>
+              <div class="diagram-node"><small>WEIGHT 01</small><strong>称重传感器</strong><p>重量信号采集</p></div>
+              <div class="diagram-node"><small>PARAM 02</small><strong>参数与控制输入</strong><p>目标重量和运行参数</p></div>
+            </div>
+            <div class="diagram-arrow" aria-hidden="true">→</div>
+            <div class="diagram-stage diagram-core">
+              <span class="diagram-stage-label">CORE / 控制层</span>
+              <div class="diagram-node diagram-node-core"><small>MCU</small><strong>STM32 控制核心</strong><p>称重数据处理<br />下料状态控制<br />参数管理与故障判断</p></div>
+            </div>
+            <div class="diagram-arrow" aria-hidden="true">→</div>
+            <div class="diagram-stage diagram-outputs">
+              <span class="diagram-stage-label">OUTPUT / 设备层</span>
+              <div class="diagram-node"><small>ACTUATOR 01</small><strong>下料执行机构</strong><p>启停和动作控制</p></div>
+              <div class="diagram-node"><small>BUS 02</small><strong>RS485 / Modbus</strong><p>设备通信与状态交互</p></div>
+            </div>
+          </div>
+          <div class="section-shell data-flow"><span>01 重量采集</span><i>→</i><span>02 数据处理</span><i>→</i><span>03 状态决策</span><i>→</i><span>04 定量下料</span></div>
+        </section>
+
+        <section class="demo-section" aria-labelledby="weighing-demo-title">
+          <div class="section-shell demo-grid">
+            <div class="demo-copy">
+              <div class="project-number">DEMO / 02</div>
+              <p class="eyebrow">PROJECT DEMO / 演示视频</p>
+              <h2 id="weighing-demo-title">称重与下料演示</h2>
+              <p>用于展示参数设置、重量采集、执行器动作和目标重量控制过程。</p>
+              <dl><div><dt>视频状态</dt><dd>待补充</dd></div><div><dt>建议内容</dt><dd>参数设置 / 连续称重 / 下料动作</dd></div></dl>
+            </div>
+            <div class="demo-player" data-video-project="weighing">
+              <video controls preload="metadata" hidden aria-label="智能茶叶定量下料控制器演示视频"></video>
+              <div class="demo-placeholder">
+                <span class="play-mark" aria-hidden="true"></span>
+                <strong>演示视频待补充</strong>
+                <small>VIDEO FILE NOT AVAILABLE</small>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell footer-inner">
+        <p>© <span id="current-year"></span> 卢嘉贤</p>
+        <p>EMBEDDED PROJECT ARCHIVE</p>
+        <a href="index.html">返回个人主页 ↑</a>
+      </div>
+    </footer>
+  </body>
+</html>
