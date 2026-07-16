@@ -83,7 +83,11 @@ async function inspect(viewport, label) {
     label === "desktop" ? heroMask.includes("gradient") : heroMask === "none",
     `${label}: 首屏照片渐变状态错误 ${heroMask}`,
   );
-  check(!(await page.locator("body").innerText()).includes("厦门"), `${label}: 页面仍显示厦门地点信息`);
+  const homeText = await page.locator("body").innerText();
+  check(!homeText.includes("厦门"), `${label}: 页面仍显示厦门地点信息`);
+  ["覆盖单片机固件", "按时间记录", "收录 12 项代表性证书"].forEach((phrase) => {
+    check(!homeText.includes(phrase), `${label}: 首页仍包含页面讲解句 ${phrase}`);
+  });
   check((await page.locator(".hero-profile-stamp").count()) === 0, `${label}: 首屏证件照小板块仍然存在`);
 
   const heroButtonSizes = await page.locator(".hero-actions .text-link").evaluateAll((buttons) =>
@@ -195,6 +199,11 @@ async function inspectProjects(viewport, label) {
   }));
   check(geometry.document <= geometry.viewport + 1, `${label}: 项目页横向溢出 ${JSON.stringify(geometry)}`);
   check(geometry.body <= geometry.viewport + 1, `${label}: 项目页 body 横向溢出 ${JSON.stringify(geometry)}`);
+
+  const projectText = await page.locator("body").innerText();
+  ["记录项目背景", "用于展示", "建议内容", "内容均来自"].forEach((phrase) => {
+    check(!projectText.includes(phrase), `${label}: 项目页仍包含页面讲解句 ${phrase}`);
+  });
 
   check((await page.locator("[data-project-tab]").count()) === 2, `${label}: 项目标签数量错误`);
   check((await page.locator('[data-project-panel="logistics"] .diagram-node').count()) === 5, `${label}: 物流项目框架节点错误`);

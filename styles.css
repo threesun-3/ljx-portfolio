@@ -274,6 +274,7 @@ img { display: block; max-width: 100%; }
   font-size: 44px; font-weight: 500; line-height: 1.14; letter-spacing: 0;
 }
 .section-intro { margin: 0; color: var(--text-soft); font-size: 17px; line-height: 1.75; }
+.section-index-data { font-family: "IBM Plex Mono", monospace; font-size: 13px; }
 
 #about { width: 100%; max-width: none; padding-inline: max(24px, calc((100% - var(--shell)) / 2)); background: var(--navy-deep); }
 
